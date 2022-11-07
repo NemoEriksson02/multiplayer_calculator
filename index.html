@@ -10,6 +10,12 @@
             user-select: none;
         }
 
+        h1{
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2rem;
+        }
+
         button{
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
@@ -48,6 +54,13 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+            width: 400px;
+        }
+
+        #calculator{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
     </style>
@@ -57,31 +70,33 @@
     <section id="main">
         <h1>The Multiplayer Calculator</h1>
         
-        <input readonly id="display" value="0"></h2><br/>
-        <input placeholder="0" readonly id="value"/><br/>
-        
-        
-        <button class="wide" onclick="erase()">Erase</button>
-        <button class="wide" onclick="send('CLS')">CLS</button><br/>
+        <section id="calculator">
+            <input readonly id="display" value="0"></h2><br/>
+            <input placeholder="0" readonly id="value"/><br/>
+            
+            
+            <button class="wide" onclick="erase()">Erase</button>
+            <button class="wide" onclick="send('CLS')">CLS</button><br/>
 
-        <button onclick="addNum(7)">7</button>
-        <button onclick="addNum(8)">8</button>
-        <button onclick="addNum(9)">9</button>
-        <button onclick="send('add')">+</button><br/>
-        
-        <button onclick="addNum(4)">4</button>
-        <button onclick="addNum(5)">5</button>
-        <button onclick="addNum(6)">6</button>
-        <button onclick="send('sub')">-</button><br/>
-        
-        <button onclick="addNum(1)">1</button>
-        <button onclick="addNum(2)">2</button>
-        <button onclick="addNum(3)">3</button>
-        <button onclick="send('mul')">*</button><br/>
-        
-        <button class="commaBtn" onclick="addComma()">.</button>
-        <button class="wide" onclick="addNum(0)" class="wide">0</button>
-        <button onclick="send('div')">/</button><br/>
+            <button onclick="addNum(7)">7</button>
+            <button onclick="addNum(8)">8</button>
+            <button onclick="addNum(9)">9</button>
+            <button onclick="send('add')">+</button><br/>
+            
+            <button onclick="addNum(4)">4</button>
+            <button onclick="addNum(5)">5</button>
+            <button onclick="addNum(6)">6</button>
+            <button onclick="send('sub')">-</button><br/>
+            
+            <button onclick="addNum(1)">1</button>
+            <button onclick="addNum(2)">2</button>
+            <button onclick="addNum(3)">3</button>
+            <button onclick="send('mul')">*</button><br/>
+            
+            <button class="commaBtn" onclick="addComma()">.</button>
+            <button class="wide" onclick="addNum(0)" class="wide">0</button>
+            <button onclick="send('div')">/</button><br/>
+            </section>
     </section>
 
     <script src="/socket.io/socket.io.js"></script>
