@@ -20,32 +20,29 @@ io.on('connection', (socket) => {
 
   socket.emit('response', displayValue);
 
-  socket.on('add', (data)=>{
-    displayValue += parseFloat(data);
-    sendResponse();
-  });
-  
-  socket.on('sub', (data)=>{
-    displayValue -= parseFloat(data);
-    sendResponse();
-  });
-  
-  socket.on('mul', (data)=>{
-    displayValue *= parseFloat(data);
-    sendResponse();
-  });
-  
-  socket.on('div', (data)=>{
-    if (parseFloat(data)!=0){
-      displayValue /= parseFloat(data);
+  socket.on('update', (type, value)=>{
+    switch(type){
+      case 'add':
+        displayValue += parseFloat(value);
+        break;
+      case 'sub':
+        displayValue -= parseFloat(value);
+        break;
+      case 'div':
+        if (value != 0){
+          displayValue /= parseFloat(value);
+        }
+        break;
+      case 'mul':
+        displayValue *= parseFloat(value);
+        break;
+      case 'CLS':
+        displayValue = 0;
+        break;
     }
+
     sendResponse();
   });
-
-  socket.on('CLS', ()=>{
-    displayValue = 0;
-    sendResponse();
-  })
 });
 
 server.listen(port, () => {

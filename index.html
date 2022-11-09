@@ -74,7 +74,6 @@
             <input readonly id="display" value="0"></h2><br/>
             <input placeholder="0" readonly id="value"/><br/>
             
-            
             <button class="wide" onclick="erase()">Erase</button>
             <button class="wide" onclick="send('CLS')">CLS</button><br/>
 
@@ -133,7 +132,7 @@
         function send(type){
             let amt = valueInput.value;
             amt = checkInput(amt);
-            socket.emit(type, amt);
+            socket.emit('update', type, amt);
             valueInput.placeholder = amt;
             valueInput.value = '';
         }
