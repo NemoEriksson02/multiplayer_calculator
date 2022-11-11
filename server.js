@@ -6,7 +6,6 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 let displayValue = 0;
-const port = 3024;
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -45,7 +44,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+server.listen(3024, () => {
+  console.log(`Listening on port 3024`);
 });
-

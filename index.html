@@ -8,6 +8,7 @@
     <style>
         *::selection{
             user-select: none;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         h1{
@@ -55,12 +56,33 @@
             left: 50%;
             transform: translateX(-50%);
             width: 400px;
+            height: 95%;
         }
 
         #calculator{
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
+        }
+
+        #joinGuide{
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            top: 75%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+        }
+        #joinGuide h3{
+            font-weight: bold;
+            font-size: 14px;
+        }
+        #joinGuide p{
+            font-size: 12px;
+        }
+
+        i{
+            font-weight: 600;
         }
 
     </style>
@@ -72,7 +94,7 @@
         
         <section id="calculator">
             <input readonly id="display" value="0"></h2><br/>
-            <input placeholder="0" readonly id="value"/><br/>
+            <input placeholder="0" id="value"/><br/>
             
             <button class="wide" onclick="erase()">Erase</button>
             <button class="wide" onclick="send('CLS')">CLS</button><br/>
@@ -96,6 +118,15 @@
             <button class="wide" onclick="addNum(0)" class="wide">0</button>
             <button onclick="send('div')">/</button><br/>
             </section>
+
+        <section id="joinGuide">
+            <h3>How to Join</h3>
+            <p>Find the hosting device's public IPv4 address <br/> 
+                (can be done with "ipconfig" in command prompt)<br/>
+                An example of IPv4 address: 192.128.1.1 </p>
+            <p>Open a browser on the new device and type <br/> 
+                [<i>the IPv4 address</i>]:3024</p>
+        </section>
     </section>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -108,7 +139,7 @@
         function checkInput(text){
             text = text.replace(/[^\d.-]+/, '');
             if (!text){ return 0 }
-            return text;
+            return text;ö
         }
 
         function addNum(num){
