@@ -4,8 +4,10 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const axios = require('axios');
 
 let displayValue = 0;
+let public_ip;
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -18,6 +20,7 @@ io.on('connection', (socket) => {
   }
 
   socket.emit('response', displayValue);
+  socket.emit('server_ip', public_ip);
 
   socket.on('update', (type, value)=>{
     switch(type){
@@ -46,4 +49,10 @@ io.on('connection', (socket) => {
 
 server.listen(3024, () => {
   console.log(`Listening on port 3024`);
+
+  (async () => {
+    const url = 'https://checkip.amazonaws.com/';
+    const response = await axios(url);
+    public_ip = response.data.trim();
+  })();
 });

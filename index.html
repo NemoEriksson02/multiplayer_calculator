@@ -7,7 +7,7 @@
     <title>Calculator v2</title>
     <style>
         *::selection{
-            user-select: none;
+            user-select: auto;
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -75,14 +75,18 @@
         }
         #joinGuide h3{
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
+            margin: 5px;
         }
         #joinGuide p{
-            font-size: 12px;
+            font-size: 13px;
+            margin: 2px;
         }
-
-        i{
+        #joinLink{
             font-weight: 600;
+        }
+        #joinLink::selection{
+            user-select: text;
         }
 
     </style>
@@ -121,11 +125,8 @@
 
         <section id="joinGuide">
             <h3>How to Join</h3>
-            <p>Find the hosting device's public IPv4 address <br/> 
-                (can be done with "ipconfig" in command prompt)<br/>
-                An example of IPv4 address: 192.128.1.1 </p>
-            <p>Open a browser on the new device and type <br/> 
-                [<i>the IPv4 address</i>]:3024</p>
+            <p>Type this is a web browser:</p>
+            <p id="joinLink">[test]</p>
         </section>
     </section>
 
@@ -170,6 +171,10 @@
 
         socket.on('response', (data)=>{
             displayElement.value = data;
+        });
+
+        socket.on('server_ip', (data)=>{
+            document.getElementById('joinLink').innerText = `${data}:3024`;
         })
         
     </script>
