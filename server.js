@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const favicon = require('serve-favicon');
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -8,6 +9,8 @@ const axios = require('axios');
 
 let displayValue = 0;
 let public_ip;
+
+app.use(favicon(__dirname + '/img/icon.ico'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');

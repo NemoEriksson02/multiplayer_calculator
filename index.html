@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator v2</title>
+    <title>Multiplayer Calculator</title>
+
     <style>
         @import url('https://fonts.cdnfonts.com/css/seven-segment');
 
@@ -12,11 +13,17 @@
             user-select: none;
         }
         #joinLink::selection, #display::selection{
-            background-color: #c0c0f0;
+            background-color: #404040;
+        }
+
+        body{
+            background: #212121;
         }
 
         p, h1, h2, h3{
+            color: #b1b1b1;
             cursor:default;
+            caret-color: transparent;
         }
 
         h1{
@@ -27,13 +34,15 @@
 
         button{
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             width: 60px;
             height: 45px;
             border: 1px solid black;
             border-radius: 3px;
             outline: none;
             margin-bottom: 4px;
+            background: #b1b1b1;
+            border: 0;
         }
         .commaBtn{
             font-size: 20px;
@@ -52,11 +61,14 @@
             margin-bottom: 4px;
             border: 2px solid black;
             border-radius: 5px;
-            background: #ededed;
             font-family: 'Seven Segment', Arial;
             font-weight: 600;
-            font-size: 20px;
+            font-size: 25px;
             text-align: right;
+            background: #b1b1b1;
+            border-color: #b1b1b1;
+            outline: none;
+            caret-color: transparent;
         }
 
         input:hover{
@@ -66,12 +78,20 @@
         #main{
             position: absolute;
             left: 50%;
+            top: 5%;
             transform: translateX(-50%);
             width: 400px;
-            height: 95%;
+            height: 80%;
+            border: 5px solid #292929;
+            background: #292929;
+            border-radius: 35px;
         }
 
         #calculator{
+            background: #727272;
+            padding: 10px;
+            border: 5px solid #727272;
+            border-radius: 25px;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -89,7 +109,7 @@
             text-align: center;
             position: absolute;
             left: 50%;
-            top: 75%;
+            bottom: 1%;
             transform: translate(-50%, -50%);
             width: 100%;
         }
