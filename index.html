@@ -8,11 +8,15 @@
     <style>
         @import url('https://fonts.cdnfonts.com/css/seven-segment');
 
-        *:not(#joinLink)::selection{
+        *:not(#joinLink, #display)::selection{
             user-select: none;
         }
-        #joinLink::selection{
+        #joinLink::selection, #display::selection{
             background-color: #c0c0f0;
+        }
+
+        p, h1, h2, h3{
+            cursor:default;
         }
 
         h1{
@@ -25,7 +29,7 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
             width: 60px;
-            height: 45px; 
+            height: 45px;
             border: 1px solid black;
             border-radius: 3px;
             outline: none;
@@ -72,6 +76,14 @@
             left: 50%;
             transform: translateX(-50%);
         }
+        
+        #buttons:hover, #buttons button:hover{
+            cursor:pointer;
+        }
+
+        #joinLink:hover, #display:hover{
+            cursor: text;
+        }
 
         #joinGuide{
             text-align: center;
@@ -105,29 +117,31 @@
             <input readonly id="display" value="0"></h2><br/>
             <input readonly placeholder="0" id="value"/><br/>
             
-            <button class="wider" onclick="erase()">DEL</button>
-            <button class="wider" onclick="send('CLS')">CLS</button>
-            <button class="wider" onclick="send('equals')">=</button><br/>
+            <div id="buttons">
+                <button class="wider" onclick="erase()">DEL</button>
+                <button class="wider" onclick="send('CLS')">CLS</button>
+                <button class="wider" onclick="send('equals')">=</button><br/>
 
-            <button onclick="addText('number',7)">7</button>
-            <button onclick="addText('number',8)">8</button>
-            <button onclick="addText('number',9)">9</button>
-            <button onclick="addText('operator', '+')">+</button><br/>
-            
-            <button onclick="addText('number',4)">4</button>
-            <button onclick="addText('number',5)">5</button>
-            <button onclick="addText('number',6)">6</button>
-            <button onclick="addText('operator', '-')">-</button><br/>
-            
-            <button onclick="addText('number', 1)">1</button>
-            <button onclick="addText('number', 2)">2</button>
-            <button onclick="addText('number', 3)">3</button>
-            <button onclick="addText('operator', '*')">*</button><br/>
-            
-            <button class="commaBtn" onclick="addText('comma', '.')">.</button>
-            <button onclick="addText('number', 0)" class="wide">0</button>
-            <button onclick="addText('operator', '/')">/</button><br/>
-            </section>
+                <button onclick="addText('number',7)">7</button>
+                <button onclick="addText('number',8)">8</button>
+                <button onclick="addText('number',9)">9</button>
+                <button onclick="addText('operator', '+')">+</button><br/>
+                
+                <button onclick="addText('number',4)">4</button>
+                <button onclick="addText('number',5)">5</button>
+                <button onclick="addText('number',6)">6</button>
+                <button onclick="addText('operator', '-')">-</button><br/>
+                
+                <button onclick="addText('number', 1)">1</button>
+                <button onclick="addText('number', 2)">2</button>
+                <button onclick="addText('number', 3)">3</button>
+                <button onclick="addText('operator', '*')">*</button><br/>
+                
+                <button class="commaBtn" onclick="addText('comma', '.')">.</button>
+                <button onclick="addText('number', 0)" class="wide">0</button>
+                <button onclick="addText('operator', '/')">/</button><br/>
+            </div>
+        </section>
 
         <section id="joinGuide">
             <h3>How to Join</h3>
