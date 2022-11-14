@@ -38,6 +38,18 @@ io.on('connection', (socket) => {
       case 'mul':
         displayValue *= parseFloat(value);
         break;
+      case 'root':
+        displayValue = Math.sqrt(displayValue);
+        break;
+      case 'pow':
+        displayValue = Math.pow(displayValue, parseFloat(value));
+        break;
+      case 'mod':
+        displayValue %= parseFloat(value);
+        break;
+      case 'log':
+        displayValue = Math.log10(displayValue);
+        break;
       case 'CLS':
         displayValue = 0;
         break;

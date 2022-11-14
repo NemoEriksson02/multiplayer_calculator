@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator v2</title>
     <style>
+        @import url('https://fonts.cdnfonts.com/css/seven-segment');
+
         *::selection{
             user-select: auto;
             font-family: Arial, Helvetica, sans-serif;
@@ -42,8 +44,9 @@
             border: 2px solid black;
             border-radius: 5px;
             background: #ededed;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 18px;
+            font-family: 'Seven Segment', sans-serif;;
+            font-weight: 600;
+            font-size: 20px;
             text-align: right;
         }
 
@@ -102,6 +105,11 @@
             
             <button class="wide" onclick="erase()">Erase</button>
             <button class="wide" onclick="send('CLS')">CLS</button><br/>
+
+            <button onclick="send('root')">√</button>
+            <button onclick="send('pow')">^</button>
+            <button onclick="send('mod')">mod</button>
+            <button onclick="send('log')">log</button>
 
             <button onclick="addNum(7)">7</button>
             <button onclick="addNum(8)">8</button>
@@ -175,7 +183,7 @@
 
         socket.on('server_ip', (data)=>{
             document.getElementById('joinLink').innerText = `${data}:3024`;
-        })
+        });
         
     </script>
 </body>
