@@ -8,9 +8,11 @@
     <style>
         @import url('https://fonts.cdnfonts.com/css/seven-segment');
 
-        *::selection{
-            user-select: auto;
-            font-family: Arial, Helvetica, sans-serif;
+        *:not(#joinLink)::selection{
+            user-select: none;
+        }
+        #joinLink::selection{
+            background-color: #c0c0f0;
         }
 
         h1{
@@ -23,7 +25,7 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 18px;
             width: 60px;
-            height: 45px;
+            height: 45px; 
             border: 1px solid black;
             border-radius: 3px;
             outline: none;
@@ -32,6 +34,9 @@
         .commaBtn{
             font-size: 20px;
             font-weight: bold;
+        }
+        .wider{
+            width: 81.333px;
         }
         .wide{
             width: 124px;
@@ -44,7 +49,7 @@
             border: 2px solid black;
             border-radius: 5px;
             background: #ededed;
-            font-family: 'Seven Segment', sans-serif;;
+            font-family: 'Seven Segment', Arial;
             font-weight: 600;
             font-size: 20px;
             text-align: right;
@@ -88,9 +93,6 @@
         #joinLink{
             font-weight: 600;
         }
-        #joinLink::selection{
-            user-select: text;
-        }
 
     </style>
 </head>
@@ -101,40 +103,36 @@
         
         <section id="calculator">
             <input readonly id="display" value="0"></h2><br/>
-            <input placeholder="0" id="value"/><br/>
+            <input readonly placeholder="0" id="value"/><br/>
             
-            <button class="wide" onclick="erase()">Erase</button>
-            <button class="wide" onclick="send('CLS')">CLS</button><br/>
+            <button class="wider" onclick="erase()">DEL</button>
+            <button class="wider" onclick="send('CLS')">CLS</button>
+            <button class="wider" onclick="send('equals')">=</button><br/>
 
-            <button onclick="send('root')">√</button>
-            <button onclick="send('pow')">^</button>
-            <button onclick="send('mod')">mod</button>
-            <button onclick="send('log')">log</button>
-
-            <button onclick="addNum(7)">7</button>
-            <button onclick="addNum(8)">8</button>
-            <button onclick="addNum(9)">9</button>
-            <button onclick="send('add')">+</button><br/>
+            <button onclick="addText('number',7)">7</button>
+            <button onclick="addText('number',8)">8</button>
+            <button onclick="addText('number',9)">9</button>
+            <button onclick="addText('operator', '+')">+</button><br/>
             
-            <button onclick="addNum(4)">4</button>
-            <button onclick="addNum(5)">5</button>
-            <button onclick="addNum(6)">6</button>
-            <button onclick="send('sub')">-</button><br/>
+            <button onclick="addText('number',4)">4</button>
+            <button onclick="addText('number',5)">5</button>
+            <button onclick="addText('number',6)">6</button>
+            <button onclick="addText('operator', '-')">-</button><br/>
             
-            <button onclick="addNum(1)">1</button>
-            <button onclick="addNum(2)">2</button>
-            <button onclick="addNum(3)">3</button>
-            <button onclick="send('mul')">*</button><br/>
+            <button onclick="addText('number', 1)">1</button>
+            <button onclick="addText('number', 2)">2</button>
+            <button onclick="addText('number', 3)">3</button>
+            <button onclick="addText('operator', '*')">*</button><br/>
             
-            <button class="commaBtn" onclick="addComma()">.</button>
-            <button class="wide" onclick="addNum(0)" class="wide">0</button>
-            <button onclick="send('div')">/</button><br/>
+            <button class="commaBtn" onclick="addText('comma', '.')">.</button>
+            <button onclick="addText('number', 0)" class="wide">0</button>
+            <button onclick="addText('operator', '/')">/</button><br/>
             </section>
 
         <section id="joinGuide">
             <h3>How to Join</h3>
             <p>Type this is a web browser:</p>
-            <p id="joinLink">[test]</p>
+            <p id="joinLink"></p>
         </section>
     </section>
 
@@ -144,41 +142,70 @@
 
         let displayElement = document.getElementById('display');
         let valueInput = document.getElementById('value');
+        let operator = null;
 
-        function checkInput(text){
-            text = text.replace(/[^\d.-]+/, '');
-            if (!text){ return 0 }
-            return text;ö
-        }
-
-        function addNum(num){
-            if(valueInput.value.length < 16){
-                valueInput.value += num;
+        function addText(type, text){
+            switch (type){
+                case 'number':
+                    if(!valueInput.value.length < 16) { valueInput.value += text; }
+                    break;
+                case 'operator':
+                    if (operator == null) { valueInput.value += text; operator = text }
+                    break;
+                case 'comma':
+                    if(!valueInput.value.includes('.')) { valueInput.value += text }
+                    break;
             }
         }
 
-        function addComma(){
-            if(!valueInput.value.includes('.')){
-                valueInput.value += '.';
-            }
-        }
 
         function erase(){
             if(valueInput.value.length > 0){
                 valueInput.value = valueInput.value.slice(0,valueInput.value.length-1);
+                operator = null;
+                ['+','-','*','/'].forEach(op=>{
+                    if (valueInput.value.includes(op)){
+                        operator = op;
+                    }
+                });
             }
         }
 
         function send(type){
-            let amt = valueInput.value;
-            amt = checkInput(amt);
-            socket.emit('update', type, amt);
-            valueInput.placeholder = amt;
-            valueInput.value = '';
+            if (type=='equals'){
+                let nums = valueInput.value.split(operator);
+                let res = parseFloat(nums[0]);
+                if (nums[0]!=''){
+                    switch(operator){
+                        case '+':
+                            res += parseFloat(nums[1]);
+                            break;
+                        case '-':
+                            res -= parseFloat(nums[1]);
+                            break;
+                        case '*':
+                            res *= parseFloat(nums[1]);
+                            break;
+                        case '/':
+                            res /= parseFloat(nums[1]);
+                            break;
+                    }
+                    socket.emit('update', [res]);
+                }else{
+                    socket.emit('update', [nums[1], operator]);
+                }
+                valueInput.placeholder = valueInput.value;
+                valueInput.value = '';
+                operator = null;
+            }
+            else if(type='CLS'){
+                socket.emit('clear');
+            }
         }
 
         socket.on('response', (data)=>{
             displayElement.value = data;
+            if ([undefined,NaN,null,''].includes(data))displayElement.value = 0;
         });
 
         socket.on('server_ip', (data)=>{

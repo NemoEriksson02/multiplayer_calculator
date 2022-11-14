@@ -22,38 +22,29 @@ io.on('connection', (socket) => {
   socket.emit('response', displayValue);
   socket.emit('server_ip', public_ip);
 
-  socket.on('update', (type, value)=>{
-    switch(type){
-      case 'add':
-        displayValue += parseFloat(value);
+  socket.on('update', (data)=> {
+    let val = data[0];
+    let op = data[1];
+    switch(op){
+      case '+':
+        displayValue += parseFloat(val);
         break;
-      case 'sub':
-        displayValue -= parseFloat(value);
+      case '-':
+        displayValue -= parseFloat(val);
         break;
-      case 'div':
-        if (value != 0){
-          displayValue /= parseFloat(value);
-        }
+      case '*':
+        displayValue *= parseFloat(val);
         break;
-      case 'mul':
-        displayValue *= parseFloat(value);
+      case '/':
+        displayValue /= parseFloat(val);
         break;
-      case 'root':
-        displayValue = Math.sqrt(displayValue);
-        break;
-      case 'pow':
-        displayValue = Math.pow(displayValue, parseFloat(value));
-        break;
-      case 'mod':
-        displayValue %= parseFloat(value);
-        break;
-      case 'log':
-        displayValue = Math.log10(displayValue);
-        break;
-      case 'CLS':
-        displayValue = 0;
-        break;
+      default:
+        displayValue = val;
     }
+    socket.on('clear', ()=>{
+      displayValue = 0;
+      sendResponse();
+    })
 
     sendResponse();
   });
