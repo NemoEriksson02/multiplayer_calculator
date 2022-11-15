@@ -6,11 +6,13 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const axios = require('axios');
+const path = require('path');
 
 let displayValue = 0;
 let public_ip;
 
 app.use(favicon(__dirname + '/img/icon.ico'));
+app.use("/", express.static(__dirname));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
