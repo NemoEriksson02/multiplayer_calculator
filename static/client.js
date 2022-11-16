@@ -7,7 +7,7 @@ let operator = null;
 function addText(type, text){
     switch (type){
         case 'number':
-            if(!valueInput.value.length < 16) { valueInput.value += text; }
+            if(valueInput.value.length < 16) { valueInput.value += text; }
             break;
         case 'operator':
             if (operator == null) { valueInput.value += text; operator = text }

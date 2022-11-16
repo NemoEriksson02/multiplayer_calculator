@@ -54,7 +54,7 @@ input{
     border-radius: 5px;
     font-family: 'Seven Segment', Arial;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 24px;
     text-align: right;
     background: #b1b1b1;
     border-color: #b1b1b1;
@@ -64,6 +64,18 @@ input{
 
 input:hover{
     cursor: default;
+}
+
+.description{
+    color: black;
+    font-family: 'Seven Segment', Arial;
+    font-size: 12px;
+    position: relative;
+    top: 30px;
+    left: 2px;
+    margin: 0;
+    padding: 0;
+    height: 0;
 }
 
 #main{

@@ -46,21 +46,23 @@ io.on('connection', (socket) => {
       default:
         displayValue = val;
     }
-    socket.on('clear', ()=>{
-      displayValue = 0;
-      sendResponse();
-    })
 
     sendResponse();
   });
+
+  socket.on('clear', ()=>{
+    displayValue = 0;
+    sendResponse();
+  });
+
 });
 
 server.listen(3024, () => {
-  console.log(`Listening on port 3024`);
-
   (async () => {
     const url = 'https://checkip.amazonaws.com/';
     const response = await axios(url);
     public_ip = response.data.trim();
+    
+    console.log(`Host: ${public_ip}\nPort: 3024\nLink: ${public_ip}:3024`);
   })();
 });
